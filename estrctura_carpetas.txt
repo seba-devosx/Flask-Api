@@ -1,0 +1,35 @@
+##Estructuras de carpetas proyecto flask
+/my_flask_app
+│
+├── /app
+│   ├── /templates        # Archivos HTML
+│   ├── /static           # Archivos estáticos (CSS, JS, imágenes)
+│   ├── /models           # Modelos de base de datos
+│   ├── /routes           # Definición de rutas/endpoints
+│   ├── /services         # Lógica de negocio y servicios
+│   ├── /utils            # Utilidades y helpers
+│   ├── __init__.py       # Inicialización de la app Flask
+│   ├── config.py         # Configuración de la aplicación
+│   ├── extensions.py     # Extensiones (ej. SQLAlchemy, JWT)
+│   └── views.py          # Vistas para renderizar HTML
+│
+├── /migrations           # Directorio para las migraciones de base de datos (con Alembic)
+├── /tests                # Pruebas unitarias y funcionales
+├── venv/                 # Entorno virtual de Python
+├── .env                  # Variables de entorno (opcional)
+├── requirements.txt      # Dependencias del proyecto
+├── run.py                # Script para iniciar la aplicación
+└── README.md             # Información general del proyecto
+
+
+Como pasar datos en el endpoint
+"<int:user_id>"
+se usa principalmente para los get, put y delete
+
+Para obtener los datos para una creacion se debe usar cuando son datos que quieres agregar aun json
+"request.json
+
+para las inserciones mediante orm se usa el "add"y"commit"
+
+Notas:
+flask no incluye pydantic para el manejo de datos de entrada en la api, se debe instalar la libreria 

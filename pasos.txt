@@ -1,0 +1,70 @@
+tener instalado flask y sqlalchemy para usar sqllite que viene con flask 
+
+Para poder usar usar base de datos 
+
+definnir nombre de archivos 
+-rutas: tendra las rutas/endpoint de la api 
+-__init__: se definira la api para poder inicializarla, como tambien la base de datos 
+-config: configuraciones de la base de datos 
+-model: se definiran los modelos de la base de datos
+que son los datos que tendran las tablas 
+
+Composicion del codigo
+Se debe definir una carpeta "app"
+
+los siguientes archivos:
+
+init.py
+-se importa: flask, flask_sqlalchemy,cors
+-se inicializa la base de datos
+-Se importan las rutas
+-se crea la funcion "create_app"
+->en ella se inicializa flask(app=Flask(__name__))
+->se llama al cors (CORS(app))
+->se carga el archivo de configuracion
+->se inicia la db (db.init_app(app))
+->Se registran las rutas(register_blueprint(ruta a usar))
+
+config.py
+-Se definen las ruta donde se almacenara la base de datos (BASE_DIR)
+-Se define el uri de sql alchemy y el nombre (f"sqlite:///{os.path.join(BASE_DIR,'My_Basedatos.db')}")
+
+run.py
+-se importa de app(init) db y create_app
+-se instancia create_app (app=create_app)
+-> se crea una funcion para crear las tablas que se hayan creado en el archivo "model.py"
+ (with app.app_context():db.create_all())
+-> se define en el archivo como main 
+( if __name__ == "__main__": app.run(debug=True) )
+
+model.py
+-se debe db desde app
+- se define la clase con el nombre del modelo, uncluyendo db.Model
+( class usuarios (db.Model))
+->se le puede agregar un funcion para que retorne un valor
+
+routes.py
+- se debe importar flask y se puede importar jsonify para retornar 4n formato json
+-se debe crear nombre para la ruta y eso agregarlo a un blueprint
+( app=api_route = Blueprint('api_route', __name__) )
+- para poder definir una ruta se puede hacer de las siguiente formar,
+->se pueden defirnir rutas las cuales peudan funcionar con get y post
+
+(
+@api_route.route('/users',methods=['GET'])
+def get_usuarios():
+    return jsonify('Hola'),200
+)
+
+Migraciones
+-Para poder generar las tablas definidas en los modelos, se deben
+correr migraciones, estas se usan para poder aplicar cambios a la base de datos
+y a las tblas y sus datos, estas migraciones se ejecutan base a comando en terminal
+
+->se debe instalar flask migrate
+->se debe inicializar dentro del archivo init.py
+-Pasos
+--> iniciar una migracion "flask db init"
+--> cada ves que se hagan cambios en las tablas se debe generar una nueva migracion
+    flask db migrate -m "Descripción del cambio"
+--> y ya terminado el cmabio se debe aplicar "flask db upgrade"
